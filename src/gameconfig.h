@@ -19,9 +19,7 @@ public:
 	const char *GetLibrary(const std::string& name);
 	const char *GetSignature(const std::string& name);
 	const char* GetSymbol(const char *name);
-	const char *GetPatch(const std::string& name);
 	int GetOffset(const std::string& name);
-	void* GetAddress(const std::string& name, void *engine, void *server, char *error, int maxlen);
 	CModule **GetModule(const char *name);
 	bool IsSymbol(const char *name);
 	void *ResolveSignature(const char *name);
@@ -35,7 +33,5 @@ private:
 	KeyValues* m_pKeyValues;
 	std::unordered_map<std::string, int> m_umOffsets;
 	std::unordered_map<std::string, std::string> m_umSignatures;
-	std::unordered_map<std::string, void*> m_umAddresses;
 	std::unordered_map<std::string, std::string> m_umLibraries;
-	std::unordered_map<std::string, std::string> m_umPatches;
 };

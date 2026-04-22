@@ -48,24 +48,14 @@ bool CGameConfig::Init(IFileSystem *filesystem, char *conf_error, int conf_error
 				m_umSignatures[it->GetName()] = std::string(it->GetString(platform));
 			}
 		}
-
-		KeyValues *patches = game->FindKey("Patches", false);
-		if (patches)
-		{
-			FOR_EACH_SUBKEY(patches, it)
-			{
-				m_umPatches[it->GetName()] = std::string(it->GetString(platform));
-			}
-		}
 	}
 	else
 	{
-		snprintf(conf_error, conf_error_size, "Failed to find game: %s", m_szGameDir.c_str());
-		return false;
+			snprintf(conf_error, conf_error_size, "Failed to find game: %s", m_szGameDir.c_str());
+			return false;
 	}
 	return true;
 }
-
 const std::string CGameConfig::GetPath()
 {
 	return m_szPath;
@@ -75,16 +65,6 @@ const char *CGameConfig::GetSignature(const std::string& name)
 {
 	auto it = m_umSignatures.find(name);
 	if (it == m_umSignatures.end())
-	{
-		return nullptr;
-	}
-	return it->second.c_str();
-}
-
-const char *CGameConfig::GetPatch(const std::string& name)
-{
-	auto it = m_umPatches.find(name);
-	if (it == m_umPatches.end())
 	{
 		return nullptr;
 	}

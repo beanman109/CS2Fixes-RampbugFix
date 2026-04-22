@@ -23,7 +23,6 @@
 #include "appframework/IAppSystem.h"
 #include "common.h"
 #include "detours.h"
-#include "icvar.h"
 #include "interface.h"
 #include "tier0/dbg.h"
 #include "schemasystem/schemasystem.h"
@@ -34,7 +33,6 @@
 #include "gameconfig.h"
 #include "entity/cgamerules.h"
 #include "entity/ccsplayercontroller.h"
-#include "serversideclient.h"
 #include "te.pb.h"
 
 #define VPROF_ENABLED
@@ -102,7 +100,6 @@ bool CS2Fixes::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	GET_V_IFACE_CURRENT(GetEngineFactory, g_pEngineServer2, IVEngineServer2, SOURCE2ENGINETOSERVER_INTERFACE_VERSION);
 	GET_V_IFACE_CURRENT(GetEngineFactory, g_pGameResourceServiceServer, IGameResourceService, GAMERESOURCESERVICESERVER_INTERFACE_VERSION);
-	GET_V_IFACE_CURRENT(GetEngineFactory, g_pCVar, ICvar, CVAR_INTERFACE_VERSION);
 	GET_V_IFACE_CURRENT(GetEngineFactory, g_pSchemaSystem, ISchemaSystem, SCHEMASYSTEM_INTERFACE_VERSION);
 	GET_V_IFACE_ANY(GetServerFactory, g_pSource2Server, ISource2Server, SOURCE2SERVER_INTERFACE_VERSION);
 	GET_V_IFACE_ANY(GetServerFactory, g_pSource2ServerConfig, ISource2ServerConfig, SOURCE2SERVERCONFIG_INTERFACE_VERSION);
@@ -153,12 +150,6 @@ bool CS2Fixes::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		return false;
 	}
 
-	if (g_GameConfig->GetOffset("CBaseEntity::Use") == -1)
-	{
-		snprintf(error, maxlen, "Failed to find CBaseEntity::Use\n");
-		return false;
-	}
-
 	Message( "All hooks started!\n" );
 
 	if (late)
@@ -201,25 +192,6 @@ void CS2Fixes::AllPluginsLoaded()
 	 */
 
 	Message( "AllPluginsLoaded\n" );
-}
-
-CUtlVector<CServerSideClient *> *GetClientList()
-{
-	if (!g_pNetworkGameServer)
-		return nullptr;
-
-	static int offset = g_GameConfig->GetOffset("CNetworkGameServer_ClientList");
-	return (CUtlVector<CServerSideClient *> *)(&g_pNetworkGameServer[offset]);
-}
-
-CServerSideClient *GetClientBySlot(CPlayerSlot slot)
-{
-	CUtlVector<CServerSideClient *> *pClients = GetClientList();
-
-	if (!pClients)
-		return nullptr;
-
-	return pClients->Element(slot.Get());
 }
 
 void CS2Fixes::Hook_ClientActive( CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid )

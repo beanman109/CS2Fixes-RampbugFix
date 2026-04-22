@@ -57,23 +57,6 @@ public:
 		return g_playerManager->GetPlayer(GetPlayerSlot());
 	}
 
-	void ChangeTeam(int iTeam)
-	{
-		static int offset = g_GameConfig->GetOffset("CCSPlayerController_ChangeTeam");
-		CALL_VIRTUAL(void, offset, this, iTeam);
-	}
-
-	void Respawn()
-	{
-		CCSPlayerPawn *pPawn = GetPlayerPawn();
-		if (!pPawn || pPawn->IsAlive())
-			return;
-
-		SetPawn(pPawn);
-		static int offset = g_GameConfig->GetOffset("CCSPlayerController_Respawn");
-		CALL_VIRTUAL(void, offset, this);
-	}
-
 	CSPlayerState GetPawnState()
 	{
 		// All CS2 pawns are derived from this

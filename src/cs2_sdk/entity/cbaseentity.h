@@ -168,12 +168,6 @@ public:
 		CALL_VIRTUAL(void, offset, this, position, angles, velocity);
 	}
 
-	bool IsPawn()
-	{
-		static int offset = g_GameConfig->GetOffset("IsEntityPawn");
-		return CALL_VIRTUAL(bool, offset, this);
-	}
-
 	bool IsController()
 	{
 		static int offset = g_GameConfig->GetOffset("IsEntityController");

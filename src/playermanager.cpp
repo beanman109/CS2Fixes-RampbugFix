@@ -21,8 +21,6 @@
 #include "utlstring.h"
 #include "playermanager.h"
 #include "entity/ccsplayercontroller.h"
-#include "utils/entity.h"
-#include "serversideclient.h"
 #include "recipientfilters.h"
 
 #define VPROF_ENABLED
@@ -34,8 +32,6 @@
 extern IVEngineServer2 *g_pEngineServer2;
 extern CGameEntitySystem *g_pEntitySystem;
 extern CGlobalVars *gpGlobals;
-
-extern CServerSideClient *GetClientBySlot(CPlayerSlot slot);
 
 ZEPlayerHandle::ZEPlayerHandle() : m_Index(INVALID_ZEPLAYERHANDLE_INDEX) {};
 

@@ -38,9 +38,6 @@
     <ClCompile Include="src\cvars.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mempatch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\addresses.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -70,9 +67,6 @@
     </ClCompile>
     <ClCompile Include="src\adminsystem.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utils\entity.cpp">
-      <Filter>Source Files\utils</Filter>
     </ClCompile>
     <ClCompile Include="src\events.cpp">
       <Filter>Source Files</Filter>
@@ -145,9 +139,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\mempatch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -234,9 +225,6 @@
     </ClInclude>
     <ClInclude Include="src\cs2_sdk\entity\cgamerules.h">
       <Filter>Header Files\cs2_sdk\entity</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utils\entity.h">
-      <Filter>Header Files\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\cs2_sdk\entity\ctakedamageinfo.h">
       <Filter>Header Files\cs2_sdk\entity</Filter>

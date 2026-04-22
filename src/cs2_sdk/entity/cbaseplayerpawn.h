@@ -36,11 +36,5 @@ public:
 	SCHEMA_FIELD(CPlayer_ObserverServices*, m_pObserverServices)
 	SCHEMA_FIELD(CHandle<CBasePlayerController>, m_hController)
 
-	void CommitSuicide(bool bExplode, bool bForce)
-	{
-		static int offset = g_GameConfig->GetOffset("CBasePlayerPawn_CommitSuicide");
-		CALL_VIRTUAL(void, offset, this, bExplode, bForce);
-	}
-
 	CBasePlayerController *GetController() { return m_hController.Get(); }
 };

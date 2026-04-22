@@ -33,7 +33,6 @@
 #include "playermanager.h"
 #include "igameevents.h"
 #include "gameconfig.h"
-#include "serversideclient.h"
 #include "tracefilter.h"
 
 #define VPROF_ENABLED
