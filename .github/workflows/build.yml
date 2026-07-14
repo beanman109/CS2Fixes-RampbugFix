@@ -6,7 +6,7 @@ on:
     tags:
       - '*'
     branches:
-      - main
+      - '*'
     paths-ignore:
     - LICENSE
     - README.md
@@ -21,10 +21,18 @@ on:
     - '**.sln'
     - '**.vcxproj**'
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Build
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
     env:
         HL2SDKCS2: ${{ github.workspace }}/CS2Fixes-RampbugFix/sdk
     container: ${{ matrix.container }}
@@ -66,11 +74,14 @@ jobs:
           fi
           cd ambuild && python setup.py install && cd ..
 
-      - name: Install Clang 16
+      - name: Install Clang 21
         if: matrix.os == 'ubuntu-latest'
         run: |
-          apt update && apt install -y clang-16
-          ln -sf /usr/bin/clang-16 /usr/bin/clang && ln -sf /usr/bin/clang++-16 /usr/bin/clang++
+          echo "deb http://apt.llvm.org/bullseye/ llvm-toolchain-bullseye-21 main" >> /etc/apt/sources.list.d/llvm.list
+          wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
+          apt update && apt install -y clang-21
+          ln -sf /usr/bin/clang-21 /usr/bin/clang
+          ln -sf /usr/bin/clang++-21 /usr/bin/clang++
 
       - name: Build
         working-directory: CS2Fixes-RampbugFix
@@ -85,12 +96,16 @@ jobs:
         with:
           name: ${{ runner.os }}
           path: CS2Fixes-RampbugFix/build/package
+          if-no-files-found: error
+          retention-days: 14
 
   release:
     name: Release
     if: startsWith(github.ref, 'refs/tags/')
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Download artifacts
